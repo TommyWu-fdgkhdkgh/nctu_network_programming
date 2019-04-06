@@ -1,0 +1,56 @@
+#include "env.h"
+#include "user.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+extern user *users;
+extern env *en_va;
+
+char *get_a_env(char *name) {
+  return getenv(name);
+}
+void print_a_env(int fd,char *name) {
+
+  FILE *file = fdopen(fd,"w");
+
+  if(getenv(name)==NULL){
+    fprintf(file,"env %s not found!\n",name);
+  }else{
+    fprintf(file,"%s\n",getenv(name));
+  }
+
+  fflush(file);
+}
+void cus_setenv(char *name,char *value,int myid){
+
+  //setenv(name,value,1);
+  //just change the path stored in user structure
+  int index,find_flag=0;
+  for(index=0;users[myid-1].envp[index]!=NULL;index++){
+    if(strcmp(users[myid-1].envp[index],name)==0){
+      free(users[myid-1].envp[index]);
+      
+      char str[100];
+      memset(str,0,100);
+      sprintf(str,"%s=%s",name,value);
+
+      users[myid-1].envp[index] = (char *)malloc(strlen(str)+4);
+      strcpy(users[myid-1].envp[index],str);
+
+      find_flag=1;
+      break;
+    }
+  }
+  
+  //insert a new envp
+  if(find_flag==0){
+    char str[100];
+    memset(str,0,100);
+    sprintf(str,"%s=%s",name,value);
+
+    users[myid-1].envp[index] = (char *)malloc(strlen(str)+4);
+    strcpy(users[myid-1].envp[index],str);
+  }
+}

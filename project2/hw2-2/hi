@@ -1,0 +1,28 @@
+exit 的行為要改變，現在是只要exit，整個server都會關掉。
+
+pipe 要區分使用者，現在的情況是，使用者A ls |1 
+使用者B cat 會把使用者A的 ls print出來 number pipe 需要多一項紀錄，還紀錄使用者的名稱，並且要有回收機制（因為使用者可能會中途離場）
+fresh_all_pipe
+辨認需要merge pipe的地方，都需要改進。
+
+
+想請問一下助教～
+
+ 假如有一個client(id==3)用ls >1建立了一個指向id為1的client的user pipe
+在 pipe還沒有傳出結果的時候，client(id==3)就退出連線
+
+在那之後，client(id==1)還能用cat <3來收取資料嗎？
+還是pipe就直接砍掉～？
+
+
+
+缺的東西:
+顯示訊息 
+user 回收                                ->done
+userpipe 回收                            ->done
+exit(client關閉連線後，server繼續執行)   ->不知道為什麼突然可以
+在user pipe in 後，還需要能夠接普通的pipe->done
+login & logout message
+
+
+

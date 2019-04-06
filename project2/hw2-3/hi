@@ -1,0 +1,7 @@
+直覺上，一般的pipe就可以不用動它了
+
+
+user pipe用fifo
+
+yell 以及 tell 使用 share memory
+

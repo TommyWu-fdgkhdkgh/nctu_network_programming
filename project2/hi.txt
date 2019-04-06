@@ -1,0 +1,10 @@
+__MACOSX
+cat
+commands
+commands.zip
+hi.txt
+ls
+noop
+number
+removetag
+removetag0
